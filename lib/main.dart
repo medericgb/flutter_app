@@ -36,7 +36,36 @@ class _QuotesListState extends State<QuotesList> {
     ),
   ];
 
-  List<String> authors = [];
+  Widget quoteTemplate(quote) {
+    return Card(
+      margin: const EdgeInsets.fromLTRB(14.0, 14.0, 14.0, 0),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              quote.text,
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(
+              height: 6.0,
+            ),
+            Text(
+              quote.author,
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.grey[800],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +79,7 @@ class _QuotesListState extends State<QuotesList> {
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
-          children: quotes
-              .map(
-                (quote) => Text(
-                  '${quote.text} - écrit par ${quote.author}',
-                ),
-              )
-              .toList(),
+          children: quotes.map((quote) => quoteTemplate(quote)).toList(),
         ),
       ),
     );
