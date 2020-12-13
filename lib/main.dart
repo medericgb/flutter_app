@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quote.dart';
+import 'quote_card.dart';
 
 void main() => runApp(MaterialApp(
       home: QuotesList(),
@@ -36,37 +37,6 @@ class _QuotesListState extends State<QuotesList> {
     ),
   ];
 
-  Widget quoteTemplate(quote) {
-    return Card(
-      margin: const EdgeInsets.fromLTRB(14.0, 14.0, 14.0, 0),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Text(
-              quote.text,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.grey[600],
-              ),
-            ),
-            SizedBox(
-              height: 6.0,
-            ),
-            Text(
-              quote.author,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.grey[800],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +46,20 @@ class _QuotesListState extends State<QuotesList> {
         backgroundColor: Color(0xFF14213d),
         centerTitle: true,
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: quotes.map((quote) => quoteTemplate(quote)).toList(),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            children: quotes
+                .map((quote) => QuoteCard(
+                    quote: quote,
+                    delete: () {
+                      setState(() {
+                        quotes.remove(quote);
+                      });
+                    }))
+                .toList(),
+          ),
         ),
       ),
     );
